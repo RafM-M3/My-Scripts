@@ -1,8 +1,9 @@
 <#
 .SYNOPSIS
-A script to deploy scheduled task to autoconnect AOVPN Device Tunnel prior the user logon
+A script to be run via scheduled task to autoconnect AOVPN Device Tunnel prior the user logon
 .DESCRIPTION
 This script will include checks for AOVPN bugs (User + Device) and do additional logging
+
 #>
 
 $GPO_Folder = "C:\Windows\AOVPN"
@@ -19,8 +20,13 @@ function Check_Unauthenticated(){
     return [bool]$(Get-NetConnectionProfile | Where-Object {$_.InterfaceAlias -like "*Unauthenticated*"})
 }
 
-function ConnectVPN {
+function ConnectDeviceVPN(){
     $vpn = Get-VpnConnection -Name $Device_Tunnel_Name -AllUserConnection;
     if($vpn.ConnectionStatus -eq "Disconnected"){
     rasdial $Device_Tunnel_Name 
     }
+}
+
+function ConnectUserVPN(){
+
+}
