@@ -1,11 +1,8 @@
 <#
 .SYNOPSIS
 A script to deploy scheduled task to autoconnect AOVPN Device Tunnel prior the user logon
-
 .DESCRIPTION
 This script will include checks for AOVPN bugs (User + Device) and do additional logging
-
-
 #>
 
 $GPO_Folder = "C:\Windows\AOVPN"
@@ -18,7 +15,7 @@ function Reset_AutoTriggers(){
 }
 
 #if AOVPN interface showing as *Unauthenticated* try to renew IP
-function Unauthenticated_Check(){
+function Check_Unauthenticated(){
     return [bool]$(Get-NetConnectionProfile | Where-Object {$_.InterfaceAlias -like "*Unauthenticated*"})
 }
 
